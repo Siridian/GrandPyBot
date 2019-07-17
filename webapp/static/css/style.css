@@ -1,0 +1,76 @@
+header
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1
+{
+    font-size: 1.5em;
+    color: fuchsia;
+}
+
+header img
+{
+    float: left;
+    padding: 30px;
+}
+
+footer
+{
+    font-size: 0.8em;
+    font-family: "Comic Sans MS", sans-serif;
+    text-align: center;
+    clear: both;
+    color: aqua;
+    margin-top: 50px
+}
+
+footer a
+{
+    color: white;
+    text-decoration : none;
+}
+
+a:hover
+{
+    text-decoration: underline;
+}
+
+a:visited
+{
+    color: rgb(200, 150, 150);
+}
+
+b
+{
+    font-style: italic;
+}
+
+body
+{
+    background-color: rgb(35, 35, 35);
+}
+
+.chatbox
+{
+    overflow: auto;
+    word-wrap: break-word;
+    background-color: white;
+    width: 80%;
+    display: flex;
+    margin: auto;
+    border: 3px solid aqua;
+    overflow: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+#history
+{
+    height: 10em;
+    width: 100%;
+    overflow-y: auto;
+}
