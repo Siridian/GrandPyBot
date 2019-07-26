@@ -10,9 +10,10 @@ function askQuestion(e) {
     e.preventDefault();
     question = form.elements.question.value;
     blockElt = document.createElement("div");
-    blockElt.innerHTML += question + "<br /> <br />"
+    blockElt.innerHTML += question + "<br /> <br />";
     historyElt.appendChild(blockElt);
-    url = "http://127.0.0.1:5000/search?question=";
+    url = window.location.href + "search?question=";
+    console.log(window.location.href + "search?question=");
     form.reset();
     getQuestion(url.concat('', question), displayAnswer, blockElt);
 }
@@ -45,6 +46,7 @@ function displayAnswer(answer, blockElt) {
     else {
         blockElt.innerHTML += "Figure-toi que j'y suis déjà allé ! C'est au " + infos.address + ". Le voici sur la carte. <br />"; 
         urlImg = "<img src=https://maps.googleapis.com/maps/api/staticmap?markers=" + infos.name + "&zoom=15&size=600x300&key=" + "AIzaSyCY8uAiaK0_0WecT1Xg405iPOv4aNLmHN0>" + "</img>";
+        console.log(urlImg);
         blockElt.innerHTML += urlImg;
         blockElt.innerHTML += "<br />" + infos.trivia;
         blockElt.innerHTML += "<a href=" + infos.link + "> [En savoir plus sur Wikipédia]</a> <br />" 
