@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+from webapp import parsinger
 
 
 app = Flask(__name__)
@@ -9,9 +10,8 @@ def index():
 
 @app.route('/search/')
 def search():
-    from parser import stpmarche
     question = request.args.get('question')
-    return stpmarche(question)
+    return parsinger.parse(question)
 
 if __name__ == "__main__":
     app.run()

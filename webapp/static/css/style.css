@@ -58,9 +58,8 @@ body
     overflow: auto;
     word-wrap: break-word;
     background-color: white;
-    width: 80%;
-    display: flex;
-    margin: auto;
+    width: 90%;
+    margin:auto;
     border: 3px solid aqua;
     overflow: auto;
     display: flex;
@@ -70,7 +69,7 @@ body
 
 #history
 {
-    height: 10em;
+    max-height: 70%;
     width: 100%;
     overflow-y: auto;
 }

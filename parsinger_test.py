@@ -1,4 +1,4 @@
-import webapp.parser as p
+import webapp.parsinger as p
 
 import requests
 
@@ -44,7 +44,7 @@ def test_map_request(monkeypatch):
 
 
     monkeypatch.setattr(requests, 'get', Mockrequest)
-    assert p.map_request("test_query") == (48.85837009999999, 2.2944813)
+    assert p.map_request("test_query") == ("testadress", 48.85837009999999, 2.2944813)
 
 
 def test_wiki_query(monkeypatch):

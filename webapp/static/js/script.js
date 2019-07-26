@@ -9,21 +9,21 @@ form.addEventListener("submit", askQuestion);
 function askQuestion(e) {
     e.preventDefault();
     question = form.elements.question.value;
-    console.log(question);
-    historyElt.textContent += question;
+    blockElt = document.createElement("div");
+    blockElt.innerHTML += question + "<br /> <br />"
+    historyElt.appendChild(blockElt);
     url = "http://127.0.0.1:5000/search?question=";
-    getQuestion(url.concat('', question), "test");
-    historyElt.textContent += "Désolé mon poussin, le parser n'est pas encore implémenté !";
+    form.reset();
+    getQuestion(url.concat('', question), displayAnswer, blockElt);
 }
 
 
-function getQuestion(url, callback) {
+function getQuestion(url, callback, blockElt) {
     var req = new XMLHttpRequest();
     req.open("GET", url);
     req.addEventListener("load", function () {
         if (req.status >= 200 && req.status < 400) {
-            console.log(req.responseText);
-            //callback(req.responseText);
+            callback(req.responseText, blockElt);
         } else {
             console.error(req.status + " " + req.statusText + " " + url);
         }
@@ -34,16 +34,20 @@ function getQuestion(url, callback) {
     req.send(null);
 }
 
-function displayAnswer(answer) {
+function displayAnswer(answer, blockElt) {
     infos = JSON.parse(answer)
     if (infos.status === "unreadable"){
-        historyElt.textContent += "Je n'ai pas compris mon poussin, peux-tu reformuler (en étant un peu plus clair) ?";
+        blockElt.innerHTML += "Je n'ai pas compris mon poussin, peux-tu reformuler (en étant un peu plus clair) ?";
     }
     else if (infos.status === "not found"){
-        historyElt.textContent += "Je suis désolé mon poussin, je ne connais pas cet endroit...";
+        blockElt.innerHTML += "Je suis désolé mon poussin, je ne connais pas cet endroit...";
     }
     else {
-        historyElt.textContent += "Figure-toi que j'y suis déjà allé ! C'est au " + infos.address + ". Le voici sur la carte. " + infos.trivia;
+        blockElt.innerHTML += "Figure-toi que j'y suis déjà allé ! C'est au " + infos.address + ". Le voici sur la carte. <br />"; 
+        urlImg = "<img src=https://maps.googleapis.com/maps/api/staticmap?markers=" + infos.name + "&zoom=15&size=600x300&key=" + "AIzaSyCY8uAiaK0_0WecT1Xg405iPOv4aNLmHN0>" + "</img>";
+        blockElt.innerHTML += urlImg;
+        blockElt.innerHTML += "<br />" + infos.trivia;
+        blockElt.innerHTML += "<a href=" + infos.link + "> [En savoir plus sur Wikipédia]</a> <br />" 
     }
 
 }

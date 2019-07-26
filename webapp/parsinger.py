@@ -4,22 +4,19 @@ from flask import jsonify
 
 import requests
 
-print("coucou")
-
-def stpmarche(user_input):
-    address = find_address(user_input)
+def parse(user_input):
+    address = find_address(user_input.lower())
     if address == "end process":
         dic = {"status": "unreadable"}
-        #print("Je n'ai pas compris mon poussin, peux-tu me dire où tu veux aller ?")
     else:
         trueadr, lat, lon = map_request(address)
-        if lat == "not":
+        if trueadr == "error":
             dic = {"status": "not found"}
-            #print("Je suis désolé mon poussin, je ne connais pas cet endroit...")
         else:
             content, url = wiki_query(lat, lon)
             dic = {
             "status": "ok",
+            "name": address,
             "address": trueadr,
             "latitude": lat,
             "longitude": lon,
@@ -54,8 +51,6 @@ def find_address(user_sentence):
         return("end process")
 
 def map_request(query):
-    
-    print("trying with : " + query)
 
     r_maps = requests.get(
             'https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + query + '&key=AIzaSyCY8uAiaK0_0WecT1Xg405iPOv4aNLmHN0').json()
@@ -74,9 +69,9 @@ def map_request(query):
             return map_request(new_query)
 
         else:
-            return("not", "found")
+            return("error", "not", "found")
 
-    return(adresse, latitude, longitude)
+    return (adresse, latitude, longitude)
 
 
 def wiki_query(lat, lon):
@@ -94,9 +89,8 @@ def wiki_query(lat, lon):
     
     content = r_wiki_text["query"]["pages"][0]["extract"]
     url = r_wiki_text["query"]["pages"][0]["fullurl"]
-    print(clean_wiki(content))
 
-    return(content, url)
+    return (content, url)
     
 
 def format_string(string):
@@ -107,9 +101,10 @@ def format_string(string):
         string = string[:-1]
     return string
 
-
+'''
 def clean_wiki(string):
     cleaned_string = string.split("\n\n")[0]
     cleaned_string = re.sub(r'<.*?>', "", cleaned_string)
     cleaned_string = re.sub(r'{.*?}}', "", cleaned_string)
     return cleaned_string
+    '''
