@@ -7,13 +7,16 @@ import requests
 def parse(user_input):
     address = find_address(user_input.lower())
     if address == "end process":
+        print("=======UNREADABLE======")
         dic = {"status": "unreadable"}
     else:
         trueadr, lat, lon = map_request(address)
         if trueadr == "error":
+            print("======NOT FOUND======")
             dic = {"status": "not found"}
         else:
-            content, url = wiki_query(lat, lon)
+            title = wiki_title_request(lat, lon)
+            content, url = wiki_content_request(title)
             dic = {
             "status": "ok",
             "name": address,
@@ -31,11 +34,11 @@ def find_address(user_sentence):
     r'adresse d[ue]s?(?: l[a\'-])?(?: ?une?)? ?((?:[\w\'-]+\s?){1,4})',
     r'trouver? l?[ae\']?s?(?: ?une?)? ?((?:[\w\'-]+\s?){1,4})',
     r'cherche l?[ae\']?s?(?: ?une?)? ?((?:[\w\'-]+\s?){1,4})',
-    r'où est l?[ae\']?s?(?: ?une?)? ?((?:[\w\'-]+\s?){1,4})',
+    r'où est(?: située?)? l?[ae\']?s?(?: ?une?)? ?((?:[\w\'-]+\s?){1,4})',
     r'emplacement d[ue]s?(?: l[a\'-])?(?: ?une?)? ?((?:[\w\']+\s?){1,4})'
     ]
-
     result_list = []
+
 
     for r in r_list:
         regex = re.compile(r)
@@ -71,17 +74,21 @@ def map_request(query):
         else:
             return("error", "not", "found")
 
+    print(adresse, latitude, longitude)
     return (adresse, latitude, longitude)
 
 
-def wiki_query(lat, lon):
+def wiki_title_request(lat, lon):
 
     r_wiki_loc = requests.get(
                 'http://fr.wikipedia.org/w/api.php?action=query&list=geosearch&gscoord={}|{}&gsradius=100&gslimit=1&format=json'.format(lat, lon)).json()
 
     title = r_wiki_loc["query"]["geosearch"][0]["title"]
 
-    print(title)
+    return(title)
+
+
+def wiki_content_request(title):
 
     r_wiki_text = requests.get(
                     'http://fr.wikipedia.org/w/api.php?action=query&prop=extracts|info&exsentences=3&inprop=url&explaintext=&titles={}&format=json&formatversion=2'.format(title)).json()

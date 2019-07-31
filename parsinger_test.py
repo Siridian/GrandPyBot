@@ -29,7 +29,7 @@ def test_map_request(monkeypatch):
             def __init__(self, url):
                 self.mockresult = {
                     "results": [{
-                        "formatted_address": "testadress",
+                        "formatted_address": "testaddress",
                         "geometry": {
                             "location": {
                                 "lat": 48.85837009999999,
@@ -44,24 +44,17 @@ def test_map_request(monkeypatch):
 
 
     monkeypatch.setattr(requests, 'get', Mockrequest)
-    assert p.map_request("test_query") == ("testadress", 48.85837009999999, 2.2944813)
+    assert p.map_request("test_query") == ("testaddress", 48.85837009999999, 2.2944813)
 
 
-def test_wiki_query(monkeypatch):
+def test_wiki_title_request(monkeypatch):
 
     class Mockrequest():
-            def __init__(self, lat, lon):
-                self.lat = lat
-                self.lon = lon
+            def __init__(self, url):
                 self.mockresult = {
                     "query": {
                         "geosearch": [{
                             "title": "testtitle"
-                            }
-                        ],
-                        "pages": [{
-                            "extract": "testextract",
-                            "fullurl": "testurl"
                             }
                         ]
                     }
@@ -71,4 +64,25 @@ def test_wiki_query(monkeypatch):
                 return self.mockresult
 
     monkeypatch.setattr(requests, 'get', Mockrequest)
-    assert p.wiki_query(48, 2.7) == ("testextract", "testurl")
+    assert p.wiki_title_request(48, 2) == ("testtitle")
+
+
+def test_wiki_content_request(monkeypatch):
+        
+    class Mockrequest():
+        def __init__(self, url):
+                self.mockresult = {
+                    "query": {
+                        "pages": [{
+                            "extract": "testextract",
+                            "fullurl": "testurl"
+                            }
+                        ]
+                    }
+                }
+
+        def json(self):
+            return self.mockresult
+
+    monkeypatch.setattr(requests, 'get', Mockrequest)
+    assert p.wiki_content_request("testtitle") == ("testextract", "testurl")

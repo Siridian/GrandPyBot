@@ -51,6 +51,7 @@ b
 body
 {
     background-color: rgb(35, 35, 35);
+    height: 90%;
 }
 
 .chatbox
@@ -58,18 +59,28 @@ body
     overflow: auto;
     word-wrap: break-word;
     background-color: white;
-    width: 90%;
+    width: 90%; 
+    height: 70%;
     margin:auto;
     border: 3px solid aqua;
     overflow: auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-bet - goween;
     flex-wrap: wrap;
 }
 
 #history
 {
-    max-height: 70%;
     width: 100%;
     overflow-y: auto;
+}
+
+#logo
+{
+
+}
+
+img:not(#logo)
+{
+
 }
