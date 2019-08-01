@@ -79,12 +79,18 @@ body
 
     .chatbox
     {
-        height: 150px;
+        height: 300px;
+        font-size: 0.5em;
     }
 
     img:not(#logo)
     {
-        max-width: 50px;
-        max-height: 50px;
+        max-width: 200px;
+        max-height: 200px;
+    }
+
+    footer
+    {
+        font-size: 1em;
     }
 }
