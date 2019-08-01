@@ -56,14 +56,13 @@ body
 
 .chatbox
 {
-    overflow: auto;
-    word-wrap: break-word;
     background-color: white;
     width: 90%; 
     max-height: 400px;
     margin:auto;
     border: 3px solid aqua;
     overflow: auto;
+    word-wrap: break-word;
     display: flex;  
     justify-content: space-between;
     flex-wrap: wrap;
@@ -74,8 +73,6 @@ body
     width: 100%;
     overflow-y: auto;
 }
-
-
 
 @media all and (max-device-width: 480px)
 {
