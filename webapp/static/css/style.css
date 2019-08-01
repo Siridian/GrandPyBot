@@ -60,12 +60,12 @@ body
     word-wrap: break-word;
     background-color: white;
     width: 90%; 
-    height: 70%;
+    max-height: 400px;
     margin:auto;
     border: 3px solid aqua;
     overflow: auto;
-    display: flex;
-    justify-content: space-bet - goween;
+    display: flex;  
+    justify-content: space-between;
     flex-wrap: wrap;
 }
 
@@ -75,12 +75,19 @@ body
     overflow-y: auto;
 }
 
-#logo
+
+
+@media all and (max-device-width: 480px)
 {
 
-}
+    .chatbox
+    {
+        height: 150px;
+    }
 
-img:not(#logo)
-{
-
+    img:not(#logo)
+    {
+        max-width: 50px;
+        max-height: 50px;
+    }
 }

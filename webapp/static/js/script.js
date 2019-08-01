@@ -3,7 +3,7 @@ var form = document.querySelector("form");
 var historyElt = document.getElementById("history");
 
 var hg = document.createElement("img");
-hg.src = "../static/images/hourglass.jpg";
+hg.src = "../static/images/hourglass.png";
 
 var angle = 45
 
@@ -87,10 +87,9 @@ function displayAnswer(answer, blockElt) {
     }
     else {
         blockElt.innerHTML += getRandomAnswer(validAnswers) + infos.address + ". Voici l'adresse sur la carte. <br />"; 
-        urlImg = "<img src=https://maps.googleapis.com/maps/api/staticmap?markers=" + infos.name + "&zoom=15&size=600x300&key=" + "AIzaSyCY8uAiaK0_0WecT1Xg405iPOv4aNLmHN0>" + "</img>";
+        urlImg = "<img src=https://maps.googleapis.com/maps/api/staticmap?markers=" + infos.name + "&zoom=15&size=300x300&key=" + "AIzaSyCY8uAiaK0_0WecT1Xg405iPOv4aNLmHN0>" + "</img>";
         blockElt.innerHTML += urlImg;
         blockElt.innerHTML += "<br />" + infos.trivia;
         blockElt.innerHTML += "<a href=" + infos.link + "> [En savoir plus sur Wikipédia]</a> <br />" 
     }
-    blockElt.scrollIntoView();
 }
