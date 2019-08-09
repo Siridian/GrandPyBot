@@ -16,16 +16,26 @@ def parse(user_input):
             dic = {"status": "not found"}
         else:
             title = wiki_title_request(lat, lon)
-            content, url = wiki_content_request(title)
-            dic = {
-            "status": "ok",
-            "name": address,
-            "address": trueadr,
-            "latitude": lat,
-            "longitude": lon,
-            "trivia": content,
-            "link": url
-            }
+            if title == "Unknown":
+                print("======UNKNOWN======")
+                dic = {
+                "status": "unknown",
+                "name": address,
+                "address": trueadr,
+                "latitude": lat,
+                "longitude": lon
+                }
+            else:
+                content, url = wiki_content_request(title)
+                dic = {
+                "status": "ok",
+                "name": address,
+                "address": trueadr,
+                "latitude": lat,
+                "longitude": lon,
+                "trivia": content,
+                "link": url
+                }
     return jsonify(dic)
 
 
@@ -80,12 +90,15 @@ def map_request(query):
 
 def wiki_title_request(lat, lon):
 
+
     r_wiki_loc = requests.get(
                 'http://fr.wikipedia.org/w/api.php?action=query&list=geosearch&gscoord={}|{}&gsradius=100&gslimit=1&format=json'.format(lat, lon)).json()
 
-    title = r_wiki_loc["query"]["geosearch"][0]["title"]
-
-    return(title)
+    try:
+        title = r_wiki_loc["query"]["geosearch"][0]["title"]
+        return(title)
+    except:
+        return("Unknown")
 
 
 def wiki_content_request(title):

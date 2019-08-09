@@ -85,8 +85,13 @@ function displayAnswer(answer, blockElt) {
     else if (infos.status === "not found"){
         blockElt.innerHTML += getRandomAnswer(notFoundAnswers);
     }
+    else if (infos.status === "unknown"){
+        blockElt.innerHTML += "Je n'y suis jamais allé, je ne pourrais te donner que l'adresse : " + infos.address + ". Avec une carte, c'est mieux ! <br />"; 
+        urlImg = "<img src=https://maps.googleapis.com/maps/api/staticmap?markers=" + infos.name + "&zoom=15&size=300x300&key=" + "AIzaSyCY8uAiaK0_0WecT1Xg405iPOv4aNLmHN0>" + "</img>";
+        blockElt.innerHTML += urlImg;
+    }
     else {
-        blockElt.innerHTML += getRandomAnswer(validAnswers) + infos.address + ". Voici l'adresse sur la carte. <br />"; 
+        blockElt.innerHTML += getRandomAnswer(validAnswers) + infos.address + ".  Avec une carte, c'est mieux ! <br />"; 
         urlImg = "<img src=https://maps.googleapis.com/maps/api/staticmap?markers=" + infos.name + "&zoom=15&size=300x300&key=" + "AIzaSyCY8uAiaK0_0WecT1Xg405iPOv4aNLmHN0>" + "</img>";
         blockElt.innerHTML += urlImg;
         blockElt.innerHTML += "<br />" + infos.trivia;
